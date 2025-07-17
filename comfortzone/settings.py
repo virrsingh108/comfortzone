@@ -17,7 +17,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-j!w@3g9==^=c5&
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 # ✅ Allow all hosts in Render or Railway
-ALLOWED_HOSTS = ['comfortzone-v5dp.onrender.com']
+ALLOWED_HOSTS = ['comfortzone-3.onrender.com', '127.0.0.1', 'localhost']
 
 # ✅ Application definition
 INSTALLED_APPS = [
