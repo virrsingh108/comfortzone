@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Orders | ComfortZone</title>
+  <style>
+    body {
+      font-family: cursive;
+      background-color: #fff4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: #f7c2e9;
+    }
+    .no-orders {
+      text-align: center;
+      font-size: 18px;
+      color: #666;
+      margin-top: 30px;
+    }
+    .btn-action {
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 5px;
+      font-size: 14px;
+      color: white;
+    }
+    .invoice-link {
+      background-color: #ff4bb5;
+    }
+    .invoice-link:hover {
+      background-color: #e33f9d;
+    }
+    .cancel-link {
+      background-color: #ff4e4e;
+    }
+    .cancel-link:hover {
+      background-color: #cc0000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📦 My Orders</h2>
+    {% if orders %}
+    <table>
+      <tr>
+        <th>Order ID</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Status</th>
+        <th>Ordered At</th>
+        <th>Invoice</th>
+        <th>Action</th>
+      </tr>
+      {% for order in orders %}
+      <tr>
+        <td>{{ order.order_id }}</td>
+        <td>{{ order.product.name }}</td>
+        <td>{{ order.quantity }}</td>
+        <td>{{ order.status }}</td>
+        <td>{{ order.ordered_at|date:"M d, Y H:i" }}</td>
+        <td>
+          <a href="{% url 'generate_invoice' order_id=order.order_id %}" class="btn-action invoice-link" target="_blank">Download</a>
+        </td>
+        <td>
+          {% if order.status == "Placed" %}
+            <a href="{% url 'cancel_order' order_id=order.order_id %}" class="btn-action cancel-link">Cancel</a>
+          {% else %}
+            ---
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+      <p class="no-orders">No orders found.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

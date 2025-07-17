@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Profile | ComfortZone</title>
+  <style>
+    body {
+      font-family: cursive;
+      background-color: #fff0f5;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 80px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #ff3399;
+      margin-bottom: 30px;
+    }
+    .info {
+      font-size: 18px;
+      margin: 15px 0;
+    }
+    .label {
+      font-weight: bold;
+      color: #444;
+    }
+    a.button {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #ff3399;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    a.button:hover {
+      background: #e60073;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>👤 My Profile</h2>
+    <div class="info"><span class="label">Username:</span> {{ request.user.username }}</div>
+    <div class="info"><span class="label">Email:</span> {{ request.user.email }}</div>
+    <div class="info"><span class="label">Joined on:</span> {{ request.user.date_joined|date:"M d, Y" }}</div>
+
+    <a class="button" href="{% url 'my_orders' %}">📦 My Orders</a>
+    <a class="button" href="{% url 'logout' %}">🚪 Logout</a>
+  </div>
+</body>
+</html>

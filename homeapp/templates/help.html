@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Help | ComfortZone</title>
+  <style>
+    body {
+      font-family: cursive;
+      margin: 0;
+      background-color: #ffe6e6;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      padding: 2px;
+      border-radius: 15px;
+      background-color: #F7A7EF;
+    }
+
+    nav {
+      flex: 1;
+      text-align: right;
+    }
+
+    nav ul {
+      display: inline-block;
+      list-style-type: none;
+    }
+
+    nav ul li {
+      display: inline-block;
+      margin-right: 9px;
+      border-radius: 12px;
+      padding: 8px 15px;
+      transition: all 0.3s ease;
+    }
+
+    nav ul li:hover {
+      background: #ffe6f3;
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    a {
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #e60000;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    h3 {
+      color: #333;
+    }
+
+    p {
+      margin-bottom: 20px;
+      color: #555;
+    }
+
+    hr {
+      margin: 20px 0;
+      border: 0;
+      height: 1px;
+      background: #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo"><strong style="color:black">COMFORTZONE &#8482;</strong></div>
+  <nav>
+    <ul>
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'cart' %}">Shopping Cart</a></li>
+      <li><a href="{% url 'help' %}">Help</a></li>
+      <li><a href="{% url 'contact' %}">Contact</a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="container">
+  <h1>Help & Support</h1>
+  <h3>1. How do I place an order?</h3>
+  <p>Browse products, add to cart, and proceed to checkout. Fill in your details and complete payment.</p>
+
+  <h3>2. What payment methods do you accept?</h3>
+  <p>We accept credit/debit cards, UPI, net banking, and COD (Cash on Delivery).</p>
+
+  <h3>3. What is your return policy?</h3>
+  <p>Items can be returned within 7 days of delivery in original condition. Contact us for a return request.</p>
+
+  <h3>4. How can I track my order?</h3>
+  <p>Go to the 'Track Your Order' section in the navigation menu.</p>
+
+  <h3>5. Having login issues?</h3>
+  <p>Check your credentials or reset your password using the "Forgot Password" link.</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!-- 🔧 This is your updated home.html (Track Order completely removed and code cleaned up) -->
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ComfortZone | Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: cursive; background-color: white; }
+
+    .navbar { display: flex; align-items: center; padding: 9px; border-radius: 15px; background-color: #F7A7EF; }
+    nav { flex: 1; text-align: right; }
+    nav ul { list-style: none; display: inline-block; }
+    nav ul li { display: inline-block; position: relative; margin-right: 17px; border-radius: 12px; padding: 8px 15px; transition: all 0.3s ease; }
+    nav ul li:hover { background: #ffe6f3; transform: scale(1.05); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    a { text-decoration: none; color: black; font-weight: bold; }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 40px;
+      right: 0;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      z-index: 1000;
+      min-width: 150px;
+    }
+    .dropdown-content a {
+      display: block;
+      padding: 10px 15px;
+      color: black;
+      text-align: left;
+    }
+    .dropdown-content a:hover {
+      background-color: #ffe6f3;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .container { max-width: 1400px; margin: auto; padding: 0 25px; }
+    .header { background: radial-gradient(#fff, #ffd6d6); border-radius: 5px; padding-bottom: 100px; }
+    .row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-around; }
+    .col-2 { flex-basis: 50%; min-width: 200px; }
+    .col-2 img { width: 100%; max-height: 500px; border-radius: 15px; object-fit: cover; }
+    .col-2 h1 { font-size: 50px; line-height: 60px; margin: 25px 0; color: red; }
+    .btn { background: red; color: white; padding: 8px 30px; margin: 30px 0; border-radius: 30px; transition: background 0.5s; display: inline-block; }
+    .btn:hover { background: hotpink; }
+
+    .small-container { margin-top: 50px; padding: 0 25px; }
+    .col-4 { flex-basis: 23%; padding: 10px; margin-bottom: 50px; text-align: center; transition: transform 0.5s; }
+    .col-4 img { width: 100%; border-radius: 10px; }
+    .col-4:hover { transform: translateY(-5px); }
+    .title { text-align: center; margin: 80px auto 40px; position: relative; line-height: 60px; color: #555; }
+    .title::after { content: ''; background: black; width: 80px; height: 5px; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); }
+
+    .footer { background: #F39BEC; padding: 60px 20px; border-radius: 15px; }
+    .footer h3, .footer p, .footer a { color: black; }
+    .footer ul { list-style-type: none; padding: 0; }
+    .footer hr { background: hotpink; height: 2px; border: none; margin: 20px; }
+    .copyright { text-align: center; margin-top: 20px; }
+
+    button { padding: 8px 12px; border-radius: 8px; background-color: black; color: white; border: none; cursor: pointer; }
+    button:hover { background-color: hotpink; }
+
+    .auth-container { max-width: 400px; background: white; padding: 30px; margin: 30px auto; border-radius: 15px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+    .auth-container input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 8px; }
+    .auth-container h2 { text-align: center; color: #e60000; margin-bottom: 10px; }
+    .auth-toggle { text-align: center; margin-top: 15px; color: #e60000; cursor: pointer; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- ✅ Navbar -->
+<div class="header">
+  <div class="container">
+    <div class="navbar">
+      <div class="logo"><strong style="color:black">COMFORTZONE ™</strong></div>
+      <nav>
+        <ul>
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'cart' %}">Shopping Cart</a></li>
+          <li><a href="{% url 'help' %}">Help</a></li>
+          {% if user.is_authenticated %}
+          <li class="dropdown">
+            <a href="javascript:void(0);">Welcome, {{ request.user.username }}</a>
+            <div class="dropdown-content">
+              <a href="{% url 'user_profile' %}">👤 View Profile</a>
+              <a href="{% url 'my_orders' %}">📦 My Orders</a>
+              <a href="{% url 'logout' %}">🚪 Logout</a>
+            </div>
+          </li>
+          {% else %}
+          <li><a href="javascript:void(0);" onclick="toggleAuthForm()">Login</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+
+    <!-- ✅ Header Banner -->
+    <div class="row">
+      <div class="col-2">
+        <h1>DESIGN <br> BEDROOMS</h1>
+        <p>Transform your bedroom into the ultimate space with our luxury ideas.</p>
+        <a href="#" class="btn">DIFFERENT BEDROOMS →</a>
+      </div>
+      <div class="col-2">
+        <img src="{% static 'images/modern-luxury-bedroom-chandelier.jpeg' %}" alt="Banner">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ Auth Form -->
+<div id="auth-section" class="auth-container hidden">
+  <div id="login-form">
+    <h2>Login</h2>
+    <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="login">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+    <p class="auth-toggle" onclick="toggleForms()">Don't have an account? Sign up</p>
+  </div>
+
+  <div id="signup-form" class="hidden">
+    <h2>Signup</h2>
+    <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="signup">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Signup</button>
+    </form>
+    <p class="auth-toggle" onclick="toggleForms()">Already have an account? Login</p>
+  </div>
+</div>
+
+<!-- ✅ Products -->
+<div class="small-container">
+  <h2 class="title">SELECT AND SHOP</h2>
+  <div class="row">
+    {% for product in products %}
+    <div class="col-4">
+      {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+      {% else %}
+        <img src="https://via.placeholder.com/300x200?text=No+Image" alt="No Image">
+      {% endif %}
+      <h4>{{ product.name }}<br>₹{{ product.price }}</h4>
+      <form method="post" action="{% url 'add_to_cart' %}">
+        {% csrf_token %}
+        <input type="hidden" name="product_id" value="{{ product.id }}">
+        <button type="submit">Add to Cart</button>
+      </form>
+      <a href="{% url 'checkout' %}?product_id={{ product.id }}"><button>Buy Now</button></a>
+    </div>
+    {% empty %}
+      <p style="text-align: center; width: 100%;">No products available.</p>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- ✅ Footer -->
+<div class="footer">
+  <div class="row">
+    <div class="footer-col-1">
+      <h3><a href="#">Check Out</a></h3>
+      <p><a href="#">Top 25 Design Styles for Bedrooms.</a></p>
+    </div>
+    <div class="footer-col-2">
+      <h3>Customer Care</h3>
+      <ul>
+        <li><a href="#">Order Status</a></li> <!-- You can comment or remove this -->
+        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+        <li><a href="#">Shipping/Returns</a></li>
+        <li><a href="#">Promotions</a></li>
+      </ul>
+    </div>
+    <div class="footer-col-3">
+      <h3>Company Info</h3>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Store Locator</a></li>
+        <li><a href="#">Privacy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col-4">
+      <h3>Follow Us</h3>
+      <ul>
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Twitter</a></li>
+        <li><a href="#">YouTube</a></li>
+      </ul>
+    </div>
+  </div>
+  <hr>
+  <p class="copyright">
+    <a href="{% url 'login' %}">BOOK NOW</a>
+  </p>
+</div>
+
+<script>
+  function toggleAuthForm() {
+    document.getElementById('auth-section').classList.toggle('hidden');
+  }
+  function toggleForms() {
+    document.getElementById('login-form').classList.toggle('hidden');
+    document.getElementById('signup-form').classList.toggle('hidden');
+  }
+</script>
+
+</body>
+</html>

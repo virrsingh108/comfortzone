@@ -1,0 +1,192 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout | ComfortZone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: cursive;
+    }
+
+    body {
+      background-color: #fff0f5;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      background-color: #F7A7EF;
+      border-radius: 0 0 15px 15px;
+    }
+
+    nav {
+      flex: 1;
+      text-align: right;
+    }
+
+    nav ul {
+      list-style: none;
+    }
+
+    nav ul li {
+      display: inline-block;
+      margin-right: 17px;
+      border-radius: 12px;
+      padding: 8px 15px;
+      transition: all 0.3s ease;
+    }
+
+    nav ul li:hover {
+      background: #ffe6f3;
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #e60000;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .order-summary {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 2px solid #ccc;
+    }
+
+    .place-order-btn {
+      margin-top: 25px;
+      width: 100%;
+      background-color: #e60000;
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+
+    .place-order-btn:hover {
+      background-color: #cc0000;
+    }
+
+    .order-item {
+      margin-bottom: 10px;
+    }
+
+    .message {
+      text-align: center;
+      margin-bottom: 15px;
+      color: green;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ✅ Navbar -->
+<div class="navbar">
+  <div class="logo">
+    <strong style="color:black">COMFORTZONE ™</strong>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'cart' %}">Shopping Cart</a></li>
+      <li><a href="{% url 'help' %}">Help</a></li>
+      <li><a href="{% url 'contact' %}">Contact</a></li>
+    </ul>
+  </nav>
+</div>
+
+<!-- ✅ Checkout Form -->
+<div class="container">
+  <h2>Checkout</h2>
+
+  <!-- Success/Error Messages -->
+  {% if messages %}
+    {% for message in messages %}
+      <p class="message">{{ message }}</p>
+    {% endfor %}
+  {% endif %}
+
+  <form method="post" action="{% url 'place_order' %}">
+    {% csrf_token %}
+
+    <label for="name">Full Name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="phone">Mobile Number</label>
+    <input type="tel" id="phone" name="phone" required maxlength="15">
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="address">Shipping Address</label>
+    <textarea id="address" name="address" rows="3" required></textarea>
+
+    <label for="payment">Payment Method</label>
+    <select id="payment" name="payment" required>
+      <option value="">Select</option>
+      <option value="cod">Cash on Delivery</option>
+      <option value="card">Credit/Debit Card</option>
+      <option value="upi">UPI</option>
+    </select>
+
+    <!-- ✅ Order Summary -->
+    <div class="order-summary">
+      <h3>Order Summary</h3>
+      {% if cart_items %}
+        {% for item in cart_items %}
+          <div class="order-item">
+            {{ item.product.name }} × {{ item.quantity }} = ₹{{ item.product.price|floatformat:2 }}
+          </div>
+        {% endfor %}
+        <hr>
+        <strong>Total: ₹{{ total_price }}</strong>
+      {% else %}
+        <p>Your cart is empty.</p>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="place-order-btn">Place Order</button>
+  </form>
+</div>
+
+</body>
+</html>

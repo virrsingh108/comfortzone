@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout - Buy Now</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: cursive;
+      background-color: white;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      padding: 9px;
+      border-radius: 15px;
+      background-color: #F7A7EF;
+    }
+
+    nav {
+      flex: 1;
+      text-align: right;
+      border-radius: 5px;
+    }
+
+    nav ul li {
+      display: inline-block;
+      margin-right: 17px;
+      border-radius: 12px;
+      padding: 8px 15px;
+      transition: all 0.3s ease;
+    }
+
+    nav ul li:hover {
+      background: #ffe6f3;
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    a {
+      text-decoration: none;
+      color: black;
+      border-radius: 5px;
+    }
+
+    .checkout-container {
+      max-width: 800px;
+      margin: 50px auto;
+      border: 2px solid hotpink;
+      border-radius: 15px;
+      padding: 30px;
+      background: #ffeef7;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #e60073;
+    }
+
+    .product {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .product img {
+      width: 200px;
+      height: auto;
+      border-radius: 12px;
+      margin-right: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid hotpink;
+      border-radius: 8px;
+    }
+
+    .total {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .btn {
+      background-color: red;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      background-color: hotpink;
+    }
+
+    .confirmation {
+      display: none;
+      text-align: center;
+      margin-top: 30px;
+      color: green;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ✅ NAVBAR -->
+<div class="navbar">
+  <div class="logo">
+    <strong style="color:black">COMFORTZONE ™</strong>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="/"><strong style="color:black">Home</strong></a></li>
+      <li><a href="/cart/"><strong style="color:black">Shopping Cart</strong></a></li>
+      <li><a href="/help/"><strong style="color:black">Help</strong></a></li>
+      <li><a href="/login/"><strong style="color:black">Login</strong></a></li>
+    </ul>
+  </nav>
+</div>
+
+<!-- ✅ CHECKOUT SECTION -->
+<div class="checkout-container">
+  <h2>Checkout - Buy Now</h2>
+
+  <div class="product" id="product-display">
+    <!-- Product info will be filled by JS -->
+  </div>
+
+  <form id="checkout-form">
+    <div class="form-group">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="mobile">Mobile Number:</label>
+      <input type="tel" id="mobile" name="mobile" maxlength="15" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+
+    <div class="form-group">
+      <label for="address">Address:</label>
+      <textarea id="address" name="address" rows="3" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="payment">Payment Mode:</label>
+      <select id="payment" name="payment" required>
+        <option value="">Select</option>
+        <option value="COD">Cash on Delivery</option>
+        <option value="Online">Online Payment</option>
+      </select>
+    </div>
+
+    <div class="total" id="total-amount">
+      Total: ₹0
+    </div>
+
+    <button type="submit" class="btn">Place Order</button>
+  </form>
+
+  <div class="confirmation" id="confirmation-msg">
+    🎉 Thank you! Your order has been placed.
+  </div>
+</div>
+
+<!-- ✅ JS FOR DISPLAYING PRODUCT -->
+<script>
+  const product = JSON.parse(localStorage.getItem('buyNow'));
+
+  if (product) {
+    document.getElementById('product-display').innerHTML = `
+      <img src="${product.img}" alt="${product.name}">
+      <div>
+        <h3>${product.name}</h3>
+        <p><strong>Price:</strong> ₹${product.price.toFixed(2)}</p>
+      </div>
+    `;
+    document.getElementById('total-amount').textContent = `Total: ₹${product.price.toFixed(2)}`;
+  }
+
+  document.getElementById('checkout-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const order = {
+      name: document.getElementById('name').value,
+      mobile: document.getElementById('mobile').value,
+      email: document.getElementById('email').value,
+      address: document.getElementById('address').value,
+      payment: document.getElementById('payment').value,
+      product
+    };
+
+    console.log("Order Placed:", order);
+
+    // Clear form & show confirmation
+    document.getElementById('checkout-form').reset();
+    document.getElementById('confirmation-msg').style.display = 'block';
+    localStorage.removeItem('buyNow');
+  });
+</script>
+
+</body>
+</html>

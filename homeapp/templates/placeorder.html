@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Placed | ComfortZone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: cursive; }
+    body { background-color: #ffe6e6; }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 15px;
+      background-color: #F7A7EF;
+    }
+
+    nav {
+      flex: 1;
+      text-align: right;
+    }
+
+    nav ul {
+      list-style: none;
+      display: inline-block;
+    }
+
+    nav ul li {
+      display: inline-block;
+      margin-right: 17px;
+      border-radius: 12px;
+      padding: 8px 15px;
+      transition: all 0.3s ease;
+    }
+
+    nav ul li:hover {
+      background: #ffe6f3;
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 700px;
+      background: white;
+      margin: 60px auto;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .container h2 {
+      color: green;
+      margin-bottom: 20px;
+    }
+
+    .order-summary {
+      text-align: left;
+      margin-top: 30px;
+    }
+
+    .order-summary h3 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .order-summary p {
+      margin-bottom: 8px;
+      color: #555;
+    }
+
+    .home-btn {
+      margin-top: 30px;
+      background-color: #e60000;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+    }
+
+    .home-btn:hover {
+      background-color: #cc0000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ Navbar -->
+  <div class="navbar">
+    <div class="logo">
+      <strong style="color:black">COMFORTZONE ™</strong>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'track' %}">Track your order</a></li>
+        <li><a href="{% url 'cart' %}">Shopping Cart</a></li>
+        <li><a href="{% url 'help' %}">Help</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- ✅ Order Placed Content -->
+  <div class="container">
+    <h2>🎉 Order Placed Successfully!</h2>
+    <p>Thank you for shopping with <strong>ComfortZone</strong>.<br>Your order has been confirmed and will be shipped soon.</p>
+
+    {% if order_summary %}
+      <div class="order-summary">
+        <h3>Order Summary</h3>
+        {% for item in order_summary %}
+          <p><strong>{{ item.product.name }}</strong> - ₹{{ item.total }} (x{{ item.quantity }})</p>
+        {% endfor %}
+        <p><strong>Total:</strong> ₹{{ total_price }}</p>
+      </div>
+    {% else %}
+      <p>No order details found. Please place your order again from <a href="{% url 'home' %}">Home</a>.</p>
+    {% endif %}
+
+    <a href="{% url 'home' %}">
+      <button class="home-btn">← Back to Home</button>
+    </a>
+  </div>
+
+</body>
+</html>
