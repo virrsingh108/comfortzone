@@ -17,7 +17,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-j!w@3g9==^=c5&
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 # ✅ Allow all hosts in Render or Railway
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['comfortzone-v5dp.onrender.com']
 
 # ✅ Application definition
 INSTALLED_APPS = [
@@ -104,5 +104,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your_email@gmail.com'         # 🔁 Replace with your Gmail
-EMAIL_HOST_PASSWORD = 'your_app_password'        # 🔁 Use Gmail App Password
+EMAIL_HOST_USER = 'vikeshprasad58@gmail.com'         # 🔁 Replace with your Gmail
+EMAIL_HOST_PASSWORD = 'iphd dqjo noua nicd'        # 🔁 Use Gmail App Password
